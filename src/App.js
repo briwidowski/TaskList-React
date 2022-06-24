@@ -2,6 +2,7 @@
 import { useState } from 'react'
 import Header from "./components/Header"
 import Tasks from "./components/Tasks"
+import AddTask from './components/AddTask'
 
 const App = () => {
   const [tasks, setTasks] = useState([
@@ -31,6 +32,14 @@ const App = () => {
     }
   ])
 
+  // Add a task
+  const addTask = (task) => {
+    const id = Math.floor(Math.random() * 1000)
+    const newTask = { id, ...task }
+    setTasks([...tasks, newTask])
+  }
+
+
   // Delete a task
   const deleteTask = (id) => {
     setTasks(tasks.filter((task) => task.id !== id))
@@ -48,6 +57,7 @@ const App = () => {
   return (
     <div className="container"> 
       <Header title='Task List' />
+      <AddTask onAdd={addTask}/>
       {/* Checks if there's any tasks to show or displays message */}
       {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} 
       onToggle={toggleReminder} /> :
